@@ -9,7 +9,26 @@ const customerSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    }
+    },
+    shoppingCart: {
+        type: Schema.Types.ObjectId,
+        ref: "shoppingcart",
+        required: true
+    },
+    orders: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "order",
+            required: true
+        }
+    ],
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "review",
+            required: true
+        }
+    ]
 }, {
     timestamps: true
 });
