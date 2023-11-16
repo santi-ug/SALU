@@ -1,12 +1,12 @@
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import db from "./src/config/dbconfig.js";
 import mainRouter from "./src/routes/mainRouter.js";
 const app = express();
 
 app.use(cors());
-// mongoose.connect('mongodb://localhost/DATABASENAME', { useNewUrlParser: true, useUnifiedTopology: true});
-
+db();
 
 
 app.use('/api/v1', mainRouter);
