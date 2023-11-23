@@ -3,33 +3,51 @@ import Link from "next/link"
 export default function Navbar() {
     return (
         // navbar goes here
-        <nav className="bg-white">
-            <div className="max-auto">
+        <nav className="bg-gray-300">
+            <div className="max-w-6xl mx-auto px-8">
                 <div className="flex justify-between">
 
                     <div className="flex space-x-4">
                         {/* // logo  */}
                         <div>
                             <Link href="#" className="flex items-center py-3 px-2">
-                                <img src="SALU logo 2.png" alt="Dog Logo" className="h-16 w-16 mr-2"/>
+                                <img src="SALU ONLY LOGO.png" alt="Dog Logo" className="h-16 w-16 mr-2"/>
                             </Link>
                             
                         </div>
 
                         {/* primary nav  */}
-                        <div className="flex items-center space-x-1">
-                            <Link href="#" className="py-5 px-3 text-teal-700">Catalogo</Link>
-                            <Link href="#" className="py-5 px-3 text-teal-700">Conocenos</Link>
+                        <div className="hidden md:flex items-center space-x-1">
+                            <Link href="#" className="py-5 px-3 hover:text-gray-700">Catalogo</Link>
+                            <Link href="#" className="py-5 px-3 hover:text-gray-700">Conocenos</Link>
                         </div>
                     </div>
                 
                     {/* secondary nav */}
-                    <div>secondary nav</div>
+                    <div className="hidden md:flex items-center space-x-1">
+                        <Link href="#" className="py-5 px-3 hover:text-gray-700" >Login</Link>
+                        <Link href="#" className="py-2 px-3 bg-aqua hover:bg-aqua-light
+                         text-gray-100 hover:text-white rounded transition duration-300">Registrarme</Link>
+                    </div>
+
+                    {/* mobile button goes here */}
+                    <div className="md:hidden flex items-center">
+                        <button className="mobile-menu-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>  
+                        </button>
+                    </div>
 
                 </div>
             </div>
+
+        {/* mobile menu  */}
+        <div className="mobile-menu hidden">
+            <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-400">Catalogo</Link>
+            <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-400">Conocenos</Link>
+        </div>
         </nav>
-        // mobile menu 
 
         // content goes here
     )
