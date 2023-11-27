@@ -1,6 +1,12 @@
-import Link from "next/link"
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Navbar() {
+
+    const [toggleHamburgerMenu, setToggleHamburgerMenu] = useState(false);
+
     return (
         // navbar goes here
         <nav className="bg-gray-300">
@@ -31,7 +37,7 @@ export default function Navbar() {
                     </div>
 
                     {/* mobile button goes here */}
-                    <div className="md:hidden flex items-center">
+                    <div className="md:hidden flex items-center" onClick={ () => setToggleHamburgerMenu(!toggleHamburgerMenu)}>
                         <button className="mobile-menu-button">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -43,10 +49,15 @@ export default function Navbar() {
             </div>
 
         {/* mobile menu  */}
-        <div className="mobile-menu hidden">
-            <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-400">Catalogo</Link>
-            <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-400">Conocenos</Link>
-        </div>
+        {
+            toggleHamburgerMenu && (
+                <div className="mobile-menu">
+                <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-400">Catalogo</Link>
+                <Link href="#" className="block py-2 px-4 text-sm hover:bg-gray-400">Conocenos</Link>
+                </div>
+            )
+        }
+
         </nav>
 
         // content goes here
