@@ -16,7 +16,7 @@ export default function Navbar() {
                     <div className="flex space-x-4">
                         {/* // logo  */}
                         <div>
-                            <Link href="#" className="flex items-center py-3 px-2">
+                            <Link href="/" className="flex items-center py-3 px-2">
                                 <img src="SALU ONLY LOGO.png" alt="Dog Logo" className="h-16 w-16 mr-2"/>
                             </Link>
                             
@@ -24,16 +24,16 @@ export default function Navbar() {
 
                         {/* primary nav  */}
                         <div className="hidden md:flex items-center space-x-1">
-                            <Link href="#" className="py-5 px-3 hover:text-gray-700">Catalogo</Link>
-                            <Link href="#" className="py-5 px-3 hover:text-gray-700">Conocenos</Link>
+                            <Link href="/catalog" className="py-5 px-3 hover:text-gray-700">Catalogo</Link>
+                            <Link href="/aboutus" className="py-5 px-3 hover:text-gray-700">Conocenos</Link>
                         </div>
                     </div>
                 
                     {/* secondary nav */}
                     <div className="hidden md:flex items-center space-x-1">
-                        <Link href="#" className="py-5 px-3 hover:text-gray-700" >Login</Link>
-                        <Link href="#" className="py-2 px-3 bg-aqua hover:bg-aqua-light
-                         text-gray-100 hover:text-white rounded transition duration-300">Registrarme</Link>
+                        <Link href="/login" className="py-5 px-3 hover:text-gray-700" >Login</Link>
+                        <Link href="/register" className="py-2 px-3 bg-aqua hover:bg-aqua-light
+                         text-gray-100 hover:text-white rounded">Registrarme</Link>
                     </div>
 
                     {/* mobile button goes here */}
