@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { Label } from "@/components/Label";
 
 export function RegisterForm() {
     const onSubmit = (error) => {
@@ -16,11 +15,11 @@ export function RegisterForm() {
                 <Input type={"text"} />
             </div>
             <div className="grid w-full max-w-sm items-center gap=1.5">
-            <h1 className="font-semibold">Correo Electronico</h1>
+                <h1 className="font-semibold">Correo Electronico</h1>
                 <Input type={"email"} />
             </div>
             <div className="grid w-full max-w-sm items-center gap=1.5">
-            <h1 className="font-semibold">Contraseña</h1>
+                <h1 className="font-semibold">Contraseña</h1>
                 <Input type={"password"} />
             </div>
             <Button className="w-full" size="lg" variant="subtle">Registrarme</Button>
