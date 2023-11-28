@@ -11,29 +11,8 @@ export function RegisterForm() {
         password: ''
     })
 
-    const registerUser = (error) => {
-        error.preventDefault();
-
-        // Make API Request
-
-        // try {
-        //     const res = await fetch('/api/register', {
-        //         method: 'POST',
-        //         body: JSON.stringify({
-        //             email,
-        //             password
-        //         }),
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     })
-        //     if (res.ok) {
-        //         // redirect
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
+    const registerUser = (email) => {
+        email.preventDefault();
         console.log("Register")
     }
     return (
