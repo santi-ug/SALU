@@ -1,16 +1,12 @@
 import cors from "cors";
 import { Router } from "express";
-import { test } from "../controllers/authController.js";
+import { registerUser, test } from "../controllers/authController.js";
 
 const authRouter = Router();
 
-authRouter.use(
-    cors({
-        credentials: true,
-        origin: 'http://localhost:3000'
-    })
-)
+// authRouter.
 
-authRouter.get('/test', test);
+authRouter.get('/', test);
+authRouter.post('/register', registerUser)
 
 export default authRouter;

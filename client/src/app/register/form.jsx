@@ -2,17 +2,39 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from 'react-hot-toast';
+import { axiosPlease } from "../layout";
 
 export function RegisterForm() {
+    const navigate = useRouter();
+
     const [data, setData] = useState({
         name: '',
         email: '',
         password: ''
     })
 
-    const registerUser = (email) => {
-        email.preventDefault();
+    const registerUser = async (e) => {
+        e.preventDefault();
+
+        const {name, email, password} = data
+        try {
+            const {data} = await axiosPlease.post('/register', {
+                name, email, password
+            })
+            if (data.error) {
+                toast.error(data.error)
+            } else {
+                setData({})
+                toast.success('Registro exitoso')
+                navigate.push('/login')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
         console.log("Register")
     }
     return (

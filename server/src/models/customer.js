@@ -10,25 +10,29 @@ const customerSchema = new Schema({
         required: true,
         unique: true
     },
-    shoppingCart: {
-        type: Schema.Types.ObjectId,
-        ref: "shoppingcart",
-        required: true
+    password: {
+        type: String,
+        required: true,
     },
-    orders: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "order",
-            required: true
-        }
-    ],
-    reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "review",
-            required: true
-        }
-    ]
+    // shoppingCart: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "shoppingcart",
+    //     required: true
+    // },
+    // orders: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "order",
+    //         required: true
+    //     }
+    // ],
+    // reviews: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "review",
+    //         required: true
+    //     }
+    // ]
 }, {
     timestamps: true
 });

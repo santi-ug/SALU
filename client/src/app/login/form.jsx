@@ -1,5 +1,6 @@
 "use client";
 
+import { axiosPlease } from "@/app/layout.jsx";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { useState } from "react";
@@ -12,6 +13,7 @@ export function LoginForm() {
 
     const loginUser = (e) => {
         e.preventDefault();
+        axiosPlease.get('/');
         console.log("Login")
     }
     return (
