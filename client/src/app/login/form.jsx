@@ -3,17 +3,35 @@
 import { axiosPlease } from "@/app/layout.jsx";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export function LoginForm() {
+    const navigate = useRouter();
+
     const [data, setData] = useState({
         email: '',
         password: ''
     })
 
-    const loginUser = (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
-        axiosPlease.get('/');
+        
+        const {email, password} = data
+        try {
+            const {data} = await axiosPlease.post('/login', {
+                email, password
+            });
+            if (data.error) {
+                toast.error(data.error)
+            } else {
+                setData({});
+                navigate.push('/')
+            }
+        } catch (error) {
+            console.log(error);
+        }
         console.log("Login")
     }
     return (

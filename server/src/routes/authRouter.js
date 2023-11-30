@@ -1,6 +1,6 @@
 import cors from "cors";
 import { Router } from "express";
-import { registerUser, test } from "../controllers/authController.js";
+import { loginUser, registerUser, test } from "../controllers/authController.js";
 
 const authRouter = Router();
 
@@ -8,5 +8,6 @@ const authRouter = Router();
 
 authRouter.get('/', test);
 authRouter.post('/register', registerUser)
+authRouter.post('/login', loginUser)
 
 export default authRouter;
