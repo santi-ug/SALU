@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Button } from "./Button";
 
 export default function Navbar() {
 
@@ -32,8 +33,9 @@ export default function Navbar() {
                     {/* secondary nav */}
                     <div className="hidden md:flex items-center space-x-1">
                         <Link href="/login" className="py-5 px-3 hover:text-gray-700" >Login</Link>
-                        <Link href="/register" className="py-2 px-3 bg-aqua hover:bg-aqua-light
-                         text-gray-100 hover:text-white rounded">Registrarme</Link>
+                        <Link href="/register" className="py-5 px-3">
+                            <Button href="/register" className="w-full-[10px]" size="lg" variant="subtle">Registrarme</Button>
+                        </Link>
                     </div>
 
                     {/* mobile button goes here */}
