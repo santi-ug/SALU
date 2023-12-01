@@ -27,13 +27,14 @@ export function LoginForm() {
                 toast.error(data.error)
             } else {
                 setData({});
-                navigate.push('/')
+                navigate.push('/profile')
             }
         } catch (error) {
             console.log(error);
         }
         console.log("Login")
     }
+    
     return (
         <form onSubmit={loginUser} className="space-y-8 w-[400px]">
             <div className="grid w-full max-w-sm items-center gap=1.5">

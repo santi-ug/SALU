@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Toaster } from 'react-hot-toast';
+import { UserContextProvider } from "../../context/userContext";
 import Navbar from '../components/Navbar';
 import './globals.css';
 
@@ -12,10 +13,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <Toaster position="bottom-right" toastOptions={{duration: 2000}} />
-        {children}
-        </body>
+        <UserContextProvider>
+          <Navbar />
+          <Toaster position="bottom-right" toastOptions={{duration: 2000}} />
+          {children}
+        </UserContextProvider>
+      </body>
     </html>
   )
 }

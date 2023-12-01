@@ -1,14 +1,18 @@
+import * as dotenv from 'dotenv';
+import { createAccessToken } from '../../libs/jwt.js';
 import { comparePassword, hashPassword } from "../helpers/auth.js";
 import Customer from "../models/customer.js";
+dotenv.config()
 
 export const test = (req, res) => {
     res.json("test is working");
 }
 
 // Register
-export const registerUser = async (req, res) => {
+export const register = async (req, res) => {
     try {
         const {name, email, password} = req.body;
+
         // Check if name was entered
         if (!name) {
             return res.json({
@@ -43,7 +47,7 @@ export const registerUser = async (req, res) => {
 }
 
 // Login
-export const loginUser = async (req, res) => {
+export const login = async (req, res) => {
     try {
         const {email, password} = req.body;
 
@@ -57,13 +61,36 @@ export const loginUser = async (req, res) => {
 
         // Check if passwords match
         const match = await comparePassword(password, user.password);
+
         if (match) {
-            res.json("contraseña es correcta")
+
+            // Create token
+            const token = await createAccessToken({email: user.email, id: user._id, name: user.name})
+            res.cookie('token', token).json(user)
         } 
         if(!match) {
             res.json("contraseña es incorrecta")
         }
-    } catch (error) {
 
+    } catch (error) {
+        console.log(error);
     }
+}
+
+// Logout
+export const logout = (req, res) => {
+        res.cookie('token', '', {
+            expires: new Date(0)
+        });
+        return res.sendStatus(200);
+}
+
+export const profile = async (req, res) => {
+    const userFound = await Customer.findById(req.user.id)
+    if (!userFound) return res.status(400).json({message: "User not found"});
+    return res.json({
+        id: userFound._id,
+        name: userFound.name,
+        email: userFound.email
+    })
 }
