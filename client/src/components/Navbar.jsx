@@ -3,35 +3,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
 import { Button } from "./Button";
 
 export default function Navbar() {
     const navigate = useRouter();
+    const { user, isAuthenticated, signout } = useAuth();
 
     const [toggleHamburgerMenu, setToggleHamburgerMenu] = useState(false);
-    
-    // fix - FROM HERE
-    const [isAuthenticated, setIsAuthenticatedd] = useState(false);
-
-    const [data, setData] = useState({
-        email: '',
-        password: ''
-    })
 
     const logoutUser = async (e) => {
         e.preventDefault();
-        
-        const {email, password} = data
+
         try {
-            const {data} = await axiosPlease.get('/logout');
-            if (data.error) {
-                toast.error(data.error)
-            } else {
-                setData({});
-                navigate.push('/profile')
-            }
-    // TO HERE
-            
+            signout()   
         } catch (error) {
             console.log(error);
         }
@@ -69,7 +54,6 @@ export default function Navbar() {
                                 <Button onClick={logoutUser} className="w-full-[10px]" size="lg" variant="subtle">Logout</Button>
                             </div>
                         ) : (
-
                         // {/* NOT AUTHENTICATED NAV */}
                         <div className="hidden md:flex items-center space-x-1">
                             <Link href="/login" className="py-5 px-3 hover:text-gray-700" >Login</Link>

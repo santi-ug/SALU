@@ -1,14 +1,15 @@
 "use client";
 
-import { axiosPlease } from "@/app/layout.jsx";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
+import { errorUI } from "../../api/auth.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export function LoginForm() {
     const navigate = useRouter();
+    const {signin, isAuthenticated} = useAuth();
 
     const [data, setData] = useState({
         email: '',
@@ -17,22 +18,14 @@ export function LoginForm() {
 
     const loginUser = async (e) => {
         e.preventDefault();
-        
         const {email, password} = data
         try {
-            const {data} = await axiosPlease.post('/login', {
-                email, password
-            });
-            if (data.error) {
-                toast.error(data.error)
-            } else {
-                setData({});
-                navigate.push('/profile')
-            }
+            const loggedUser = await signin({email, password})
+            const redirect = errorUI(loggedUser, setData, false)
+            if (redirect) navigate.push('/profile')
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
-        console.log("Login")
     }
     
     return (

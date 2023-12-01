@@ -2,13 +2,20 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useAuth } from "@/context/AuthContext.jsx";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from 'react-hot-toast';
+import { errorUI, registerRequest } from "../../api/auth.js";
 import { axiosPlease } from "../layout";
 
 export function RegisterForm() {
     const navigate = useRouter();
+    const { isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated) navigate.push('/profile')
+    }, [isAuthenticated])
 
     const [data, setData] = useState({
         name: '',
@@ -18,24 +25,14 @@ export function RegisterForm() {
 
     const registerUser = async (e) => {
         e.preventDefault();
-
         const {name, email, password} = data
         try {
-            const {data} = await axiosPlease.post('/register', {
-                name, email, password
-            })
-            if (data.error) {
-                toast.error(data.error)
-            } else {
-                setData({})
-                toast.success('Registro exitoso')
-                navigate.push('/login')
-            }
+            const {data} = await registerRequest({name, email, password})
+            const redirect = errorUI(data, setData, true)
+            if (redirect) navigate.push('/login')
         } catch (error) {
             console.log(error);
         }
-
-        console.log("Register")
     }
     return (
         <form onSubmit={registerUser} className="space-y-8 w-[400px]">

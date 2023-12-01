@@ -1,13 +1,25 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useContext } from 'react';
-import { UserContext } from '../../../context/userContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function Profile() {
-    const {user} = useContext(UserContext)
+    const {user, isAuthenticated} = useAuth();
+    const navigate = useRouter();
+
     return (
         <div>
-            <h1>Dashboard</h1>
-            {!!user && (<h1>Hi {user.name}!</h1>)}
+            { isAuthenticated ? (
+                <div>
+                    <h1>Dashboard</h1>
+                    {!!user && (<h1>Hi {user.name}!</h1>)}
+                </div>
+            ) : (
+                <div>
+                    <h1>Not Logged In</h1>
+                    {navigate.push('/login')}
+                </div>
+            )}
         </div>
-  )
+    )
 }

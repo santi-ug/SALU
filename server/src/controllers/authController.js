@@ -19,17 +19,23 @@ export const register = async (req, res) => {
                 error: 'Nombre es requerido'
             })
         };
-        // Check if password is good
-        if (!password || password.length < 8) {
+        // Check if email was properly entered
+        if (!email.includes('@') || !email.includes('.') || !email) {
             return res.json({
-                error: 'Contraseña es requerida y debe tener 8 caracteres minimo.'
+                error: 'Ingrese el correo correctamente'
             })
         };
-        // Check email
+        // Check if email exists
         const exist = await Customer.findOne({email});
         if (exist) {
             return res.json({
                 error: "Correo Electronico ya en uso"
+            })
+        };
+        // Check if password is good
+        if (!password || password.length < 8) {
+            return res.json({
+                error: 'Contraseña es requerida y debe tener 8 caracteres minimo.'
             })
         };
 
