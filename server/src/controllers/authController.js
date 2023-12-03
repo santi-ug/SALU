@@ -16,26 +16,30 @@ export const register = async (req, res) => {
         // Check if name was entered
         if (!name) {
             return res.json({
-                error: 'Nombre es requerido'
+                error: 'Nombre es requerido',
+                status: 400
             })
         };
         // Check if email was properly entered
         if (!email.includes('@') || !email.includes('.') || !email) {
             return res.json({
-                error: 'Ingrese el correo correctamente'
+                error: 'Ingrese el correo correctamente',
+                status: 400
             })
         };
         // Check if email exists
         const exist = await Customer.findOne({email});
         if (exist) {
             return res.json({
-                error: "Correo Electronico ya en uso"
+                error: "Correo Electronico ya en uso",
+                status: 403
             })
         };
         // Check if password is good
         if (!password || password.length < 8) {
             return res.json({
-                error: 'Contraseña es requerida y debe tener 8 caracteres minimo.'
+                error: 'Contraseña es requerida y debe tener 8 caracteres minimo.',
+                status: 400
             })
         };
 
@@ -54,6 +58,7 @@ export const register = async (req, res) => {
 
 // Login
 export const login = async (req, res) => {
+
     try {
         const {email, password} = req.body;
 
@@ -61,7 +66,8 @@ export const login = async (req, res) => {
         const user = await Customer.findOne({email});
         if (!user) {
             return res.json({
-                error: "usuario no existe"
+                error: "usuario no existe",
+                status: 404
             })
         }
 
@@ -72,10 +78,14 @@ export const login = async (req, res) => {
 
             // Create token
             const token = await createAccessToken({email: user.email, id: user._id, name: user.name})
-            res.cookie('token', token).json(user)
+            res.cookie('token', token)
+            res.json({email: user.email, id: user._id, name: user.name, token: token})
         } 
         if(!match) {
-            res.json("contraseña es incorrecta")
+            res.json({
+                error: "contraseña es incorrecta",
+                status: 400
+            })
         }
 
     } catch (error) {
@@ -93,7 +103,7 @@ export const logout = (req, res) => {
 
 export const profile = async (req, res) => {
     const userFound = await Customer.findById(req.user.id)
-    if (!userFound) return res.status(400).json({message: "User not found"});
+    if (!userFound) return res.status(400).json({error: "User not found"});
     return res.json({
         id: userFound._id,
         name: userFound.name,

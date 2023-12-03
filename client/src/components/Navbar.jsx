@@ -1,14 +1,15 @@
 "use client";
 
+import { logoutRequest } from "@/services/auth";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext.jsx";
 import { Button } from "./Button";
 
 export default function Navbar() {
+    const {data: session} = useSession();
     const navigate = useRouter();
-    const { user, isAuthenticated, signout } = useAuth();
 
     const [toggleHamburgerMenu, setToggleHamburgerMenu] = useState(false);
 
@@ -43,25 +44,21 @@ export default function Navbar() {
                             <Link href="/aboutus" className="py-5 px-3 hover:text-gray-700">Conocenos</Link>
                         </div>
                     </div>
-                
-
 
                     {/* secondary nav */}
-
-                        {/* AUTHENTICATED NAV */}
-                        { isAuthenticated ? (
-                            <div href="/register" className="py-5 px-3">
-                                <Button onClick={logoutUser} className="w-full-[10px]" size="lg" variant="subtle">Logout</Button>
-                            </div>
-                        ) : (
-                        // {/* NOT AUTHENTICATED NAV */}
+                    
+                    { session?.user ? (
+                        <div href="/" className="py-5 px-3">
+                            <Button onClick={() => logoutRequest()} className="w-full-[10px]" size="lg" variant="subtle">Logout</Button>
+                        </div>
+                    ) : (
                         <div className="hidden md:flex items-center space-x-1">
                             <Link href="/login" className="py-5 px-3 hover:text-gray-700" >Login</Link>
                             <Link href="/register" className="py-5 px-3">
                                 <Button href="/register" className="w-full-[10px]" size="lg" variant="subtle">Registrarme</Button>
                             </Link>
                         </div>
-                        )}
+                    )}
 
                     {/* mobile button goes here */}
                     <div className="md:hidden flex items-center" onClick={ () => setToggleHamburgerMenu(!toggleHamburgerMenu)}>

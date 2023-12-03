@@ -2,34 +2,44 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { errorUI } from "../../api/auth.js";
-import { useAuth } from "../../context/AuthContext.jsx";
+import React, { useState } from "react";
+import { errorUI } from "../../services/auth.js";
 
 export function LoginForm() {
     const navigate = useRouter();
-    const {signin, isAuthenticated} = useAuth();
 
     const [data, setData] = useState({
         email: '',
         password: ''
     })
 
-    const loginUser = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         const {email, password} = data
-        try {
-            const loggedUser = await signin({email, password})
-            const redirect = errorUI(loggedUser, setData, false)
-            if (redirect) navigate.push('/profile')
-        } catch (error) {
-            console.error(error);
+
+        const responseNextAuth = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+        });
+
+        if (responseNextAuth?.error) {
+            // false = login
+            errorUI(responseNextAuth, false);
+            console.error(responseNextAuth)
+            return;
+        } else {
+            // false = login
+            errorUI(responseNextAuth, false);
         }
+
+        navigate.push('/profile');
     }
     
     return (
-        <form onSubmit={loginUser} className="space-y-8 w-[400px]">
+        <form onSubmit={handleSubmit} className="space-y-8 w-[400px]">
             <div className="grid w-full max-w-sm items-center gap=1.5">
                 <h1 className="font-semibold">Correo Electronico</h1>
                 <Input value={data.email} onChange={(e) => setData({...data, email: e.target.value})} type={"email"} />

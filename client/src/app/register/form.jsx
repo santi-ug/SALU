@@ -2,40 +2,66 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { useAuth } from "@/context/AuthContext.jsx";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from 'react-hot-toast';
-import { errorUI, registerRequest } from "../../api/auth.js";
-import { axiosPlease } from "../layout";
+import { useState } from "react";
+import { errorUI } from "../../services/auth.js";
 
 export function RegisterForm() {
     const navigate = useRouter();
-    const { isAuthenticated } = useAuth();
-
-    useEffect(() => {
-        if (isAuthenticated) navigate.push('/profile')
-    }, [isAuthenticated])
-
     const [data, setData] = useState({
         name: '',
         email: '',
         password: ''
     })
 
-    const registerUser = async (e) => {
+
+    // errors:
+    //     error: 'Nombre es requerido'
+    //     error: 'Ingrese el correo correctamente'
+    //     error: "Correo Electronico ya en uso"
+    //     error: 'Contraseña es requerida y debe tener 8 caracteres minimo.'
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const {name, email, password} = data
-        try {
-            const {data} = await registerRequest({name, email, password})
-            const redirect = errorUI(data, setData, true)
-            if (redirect) navigate.push('/login')
-        } catch (error) {
-            console.log(error);
+
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({name, email, password}),
+            }
+        );
+        
+        const responseAPI = await res.json();
+        
+        if (responseAPI?.error) {
+            errorUI(responseAPI, true);
+            return;
+        } else {
+            errorUI(responseAPI, true);
         }
+
+        const responseNextAuth = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+        });
+
+        if (responseNextAuth?.error) {
+            // false = login
+            errorUI(responseNextAuth.error, false);
+            return;
+        }
+
+        navigate.push('/profile');
     }
     return (
-        <form onSubmit={registerUser} className="space-y-8 w-[400px]">
+        <form onSubmit={handleSubmit} className="space-y-8 w-[400px]">
             <div className="grid w-full max-w-sm items-center gap=1.5">
                 <h1 className="font-semibold">Nombre</h1>
                 <Input value={data.name} onChange={(e) => setData({...data, name: e.target.value})} type={"text"} />
