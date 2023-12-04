@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { ObjectId, Schema, model } from "mongoose";
 
 const userSchema = new Schema({
     name: {
@@ -20,12 +20,12 @@ const userSchema = new Schema({
     role: {
         type: String,
         default: "user"
-    }
-    // shoppingCart: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "shoppingcart",
-    //     required: true
-    // },
+    },
+    cart: {
+        type: Array,
+        default: []
+    },
+    address: [{type: ObjectId, ref: "Address"}],
     // orders: [
     //     {
     //         type: Schema.Types.ObjectId,
