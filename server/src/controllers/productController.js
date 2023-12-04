@@ -18,8 +18,44 @@ export const createProduct = async (req, res) => {
 // Get all products
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find({});
-        res.json(products);
+        // Filtering
+        const queryObj = {...req.query};
+        const excludedFields = ['page', 'sort', 'limit', 'fields'];
+        excludedFields.forEach(el => delete queryObj[el]);
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+        let query = Product.find(JSON.parse(queryStr));
+
+        // Sorting
+        if (req.query.sort) {
+            const sortBy = req.query.sort.split(",").join(" ");
+            query = query.sort(sortBy);
+        } else {
+            query = query.sort("-createdAt");
+        }
+
+        // Limiting the fields
+        if (req.query.fields) {
+            const fields = req.query.fields.split(",").join(" ");
+            query = query.select(fields);
+        } else {
+            query = query.select("-__v");
+        }
+
+        // Pagination
+        const page = req.query.page;
+        const limit = req.query.limi;
+        const skip = (page - 1) * limit;
+        query = query.skip(skip).limit(limit);
+        if (req.query.page) {
+            const productCount = await Product.countDocuments();
+            if (skip >= productCount) res.json("This page doesnt exist");
+        }
+        const product = await query;
+
+        
+        res.json(product);
     } catch (error) {
         return res.json(error)
     }
