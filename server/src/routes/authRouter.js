@@ -2,10 +2,7 @@ import { Router } from "express";
 import { deleteUser, getAllUsers, getUser, login, logout, profile, register, test, updateUser } from "../controllers/authController.js";
 import { authMiddleware, isAdmin } from "../middlewares/authMiddleware.js";
 import { authRequired } from "../middlewares/validateToken.js";
-
 const authRouter = Router();
-
-// authRouter.
 
 authRouter.get('/', test);
 
