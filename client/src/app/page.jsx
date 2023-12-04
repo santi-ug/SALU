@@ -1,5 +1,11 @@
+import Link from "next/link"
+
 export default function LandingPage() {
     return (
-        <div>Landing Page</div>
+        <div className="w-full h-full bg-contain">
+            <Link href="/catalog">
+                <img src="landingpage.png" alt="Landing Page" className="w-full h-full bg-contain"/>
+            </Link>
+        </div>
     )
 }

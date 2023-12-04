@@ -15,7 +15,6 @@ export function RegisterForm() {
         password: ''
     })
 
-
     // errors:
     //     error: 'Nombre es requerido'
     //     error: 'Ingrese el correo correctamente'

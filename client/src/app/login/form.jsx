@@ -9,7 +9,6 @@ import { errorUI } from "../../services/auth.js";
 
 export function LoginForm() {
     const navigate = useRouter();
-
     const [data, setData] = useState({
         email: '',
         password: ''
