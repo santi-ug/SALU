@@ -1,9 +1,10 @@
 import * as dotenv from 'dotenv';
 import { createAccessToken } from '../../libs/jwt.js';
 import { comparePassword, hashPassword } from "../helpers/auth.js";
-import Customer from "../models/customer.js";
+import User from "../models/user.js";
 dotenv.config()
 
+// Test
 export const test = (req, res) => {
     res.json("test is working");
 }
@@ -28,7 +29,7 @@ export const register = async (req, res) => {
             })
         };
         // Check if email exists
-        const exist = await Customer.findOne({email});
+        const exist = await User.findOne({email});
         if (exist) {
             return res.json({
                 error: "Correo Electronico ya en uso",
@@ -46,11 +47,11 @@ export const register = async (req, res) => {
         // Hashing password
         const hashedPassword = await hashPassword(password)
 
-        const customer = await Customer.create({
+        const user = await User.create({
             name, email, password: hashedPassword
         })
 
-        return res.json(customer)
+        return res.json(user)
     } catch (error) {
         console.log(error);
     }
@@ -63,7 +64,7 @@ export const login = async (req, res) => {
         const {email, password} = req.body;
 
         // Check if user exists
-        const user = await Customer.findOne({email});
+        const user = await User.findOne({email});
         if (!user) {
             return res.json({
                 error: "usuario no existe",
@@ -79,7 +80,7 @@ export const login = async (req, res) => {
             // Create token
             const token = await createAccessToken({email: user.email, id: user._id, name: user.name})
             res.cookie('token', token)
-            res.json({email: user.email, id: user._id, name: user.name, token: token})
+            res.json({id: user._id, name: user.name, email: user.email, token: token, role: user.role})
         } 
         if(!match) {
             res.json({
@@ -101,8 +102,9 @@ export const logout = (req, res) => {
         return res.sendStatus(200);
 }
 
+
 export const profile = async (req, res) => {
-    const userFound = await Customer.findById(req.user.id)
+    const userFound = await User.findById(req.user.id)
     if (!userFound) return res.status(400).json({error: "User not found"});
     return res.json({
         id: userFound._id,

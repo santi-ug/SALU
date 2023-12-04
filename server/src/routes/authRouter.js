@@ -1,4 +1,3 @@
-import cors from "cors";
 import { Router } from "express";
 import { login, logout, profile, register, test } from "../controllers/authController.js";
 import { authRequired } from "../middlewares/validateToken.js";
