@@ -25,7 +25,7 @@ const userSchema = new Schema({
         type: Array,
         default: []
     },
-    address: [{type: ObjectId, ref: "Address"}],
+    address: String,
     // orders: [
     //     {
     //         type: Schema.Types.ObjectId,

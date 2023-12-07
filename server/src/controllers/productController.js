@@ -52,9 +52,9 @@ export const getAllProducts = async (req, res) => {
             const productCount = await Product.countDocuments();
             if (skip >= productCount) res.json("This page doesnt exist");
         }
+
         const product = await query;
 
-        
         res.json(product);
     } catch (error) {
         return res.json(error)

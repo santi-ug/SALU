@@ -28,6 +28,10 @@ const productSchema = new Schema({
         type: Number,
         required: true,
     },
+    img: {
+        type: String,
+        required: true
+    },
     sold: {
         type: Number,
         default: 0
@@ -35,12 +39,12 @@ const productSchema = new Schema({
     images: {
         type: Array,
     },
-    ratings: [
-        {
-            star: Number,
-            postedBy: {type: ObjectId, ref: "User"}
-        }
-    ],
+    // ratings: [
+    //     {
+    //         star: Number,
+    //         postedBy: {type: ObjectId, ref: "User"}
+    //     }
+    // ],
 }, {
     timestamps: true
 });

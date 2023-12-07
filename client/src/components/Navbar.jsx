@@ -21,7 +21,7 @@ export default function Navbar() {
 
                     <div className="flex space-x-4">
                         {/* // logo  */}
-                        <div>
+                        <div className="pr-10">
                             <Link href="/" className="flex items-center py-3 px-2">
                                 <img src="SALU ONLY LOGO.png" alt="Dog Logo" className="h-16 w-16 mr-2"/>
                                 <h1 className="absolute px-14 text-xl font-bold text-aqua">SALU</h1>

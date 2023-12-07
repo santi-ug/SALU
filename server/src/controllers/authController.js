@@ -105,6 +105,19 @@ export const logout = (req, res) => {
 
 /////////////////////////////////////////////
 
+// Save Address
+export const saveAddress = async (req, res) => {
+    const { _id } = req.user;
+    validateIDinDB(_id);
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(_id, { address: req.body.address }, {new: true});
+        res.json(updatedUser);
+    } catch( error) {
+        res.json(error);
+    }
+}
+
 // Get all Users
 export const getAllUsers = async (req, res) => {
     try {
