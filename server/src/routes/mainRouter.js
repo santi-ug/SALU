@@ -1,11 +1,13 @@
 import cors from "cors";
 import { Router } from "express";
 import authRouter from "./authRouter.js";
-import customerRouter from "./customerRouter.js";
+import categoryRouter from "./categoryRouter.js";
+import productRouter from "./productRouter.js";
 
 const mainRouter = Router();
 
-mainRouter.use('/customers', customerRouter);
 mainRouter.use('/auth', authRouter);
+mainRouter.use('/products', productRouter);
+mainRouter.use('/categories', categoryRouter);
 
 export default mainRouter;

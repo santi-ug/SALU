@@ -15,14 +15,6 @@ export function RegisterForm() {
         password: ''
     })
 
-
-    // errors:
-    //     error: 'Nombre es requerido'
-    //     error: 'Ingrese el correo correctamente'
-    //     error: "Correo Electronico ya en uso"
-    //     error: 'Contraseña es requerida y debe tener 8 caracteres minimo.'
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const {name, email, password} = data

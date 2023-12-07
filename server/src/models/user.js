@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import { ObjectId, Schema, model } from "mongoose";
 
-const customerSchema = new Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -14,11 +14,18 @@ const customerSchema = new Schema({
         type: String,
         required: true,
     },
-    // shoppingCart: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "shoppingcart",
-    //     required: true
-    // },
+    phone: {
+        type: String,
+    },
+    role: {
+        type: String,
+        default: "user"
+    },
+    cart: {
+        type: Array,
+        default: []
+    },
+    address: String,
     // orders: [
     //     {
     //         type: Schema.Types.ObjectId,
@@ -37,4 +44,4 @@ const customerSchema = new Schema({
     timestamps: true
 });
 
-export default model("Customer", customerSchema);
+export default model("User", userSchema);

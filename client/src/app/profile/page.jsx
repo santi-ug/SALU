@@ -27,10 +27,10 @@ export default function Profile() {
         //         </div>
         //     )}
         // </div>
-        <div>
+        <div className="flex-wrap justify-center px-40">
             <h1>Profile</h1>
             <pre>
-                <code>{JSON.stringify(session, null, 2)}</code>
+                <code className="flex-wrap">{JSON.stringify(session, null, 2)}</code>
             </pre>
         </div>
     )

@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import db from "./src/config/dbconfig.js";
 import mainRouter from "./src/routes/mainRouter.js";
 

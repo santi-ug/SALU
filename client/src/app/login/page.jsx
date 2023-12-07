@@ -1,7 +1,18 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import { LoginForm } from "./form";
 
 export default function LoginPage() {
+  const navigate = useRouter();
+  const {data: session} = useSession();
+
+  if (session?.user) {
+      navigate.push('/profile');
+  }
+
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-100">
     <div className="shadow-xl px-8 pb-8 pt-12 bg-white rounded-xl space-y-8">

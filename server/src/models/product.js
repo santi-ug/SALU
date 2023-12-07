@@ -1,13 +1,16 @@
-import { Schema, model } from "mongoose";
+import { ObjectId, Schema, model } from "mongoose";
 
 const productSchema = new Schema({
-    category: {
+    title: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
-    name: {
+    slug: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        lowercase: true,
     },
     description: {
         type: String,
@@ -17,17 +20,31 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    stock: {
-        type: Number,
+    category: {
+        type: String,
         required: true
     },
-    reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "review",
-            required: true
-        }
-    ]
+    stock: {
+        type: Number,
+        required: true,
+    },
+    img: {
+        type: String,
+        required: true
+    },
+    sold: {
+        type: Number,
+        default: 0
+    },
+    images: {
+        type: Array,
+    },
+    // ratings: [
+    //     {
+    //         star: Number,
+    //         postedBy: {type: ObjectId, ref: "User"}
+    //     }
+    // ],
 }, {
     timestamps: true
 });
