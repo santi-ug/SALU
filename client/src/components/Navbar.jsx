@@ -32,6 +32,7 @@ export default function Navbar() {
                         <div className="hidden md:flex items-center pl-5 space-x-1">
                             <Link href="/catalog" className="py-5 px-3 hover:text-gray-700">Catalogo</Link>
                             <Link href="/aboutus" className="py-5 px-3 hover:text-gray-700">Conocenos</Link>
+                            <a href="https://hellstarrr.itch.io/3d-fruit-ninja" className="py-5 px-3 hover:text-gray-700">Entretenimiento</a>
                         </div>
                     </div>
 
